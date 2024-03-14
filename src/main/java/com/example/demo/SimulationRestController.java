@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
+@RequestMapping("/api/v1/simulation/")
 public class SimulationRestController {
 
     @Autowired
@@ -19,37 +20,22 @@ public class SimulationRestController {
 
     }
 
-    @RequestMapping("/banana")
-    public String HelloBanana (){
-
-
-        return "Here you have bananas array";
-
-    }
 
     @RequestMapping("/simulations")
-    public ArrayList<Simulation> getAllSimulations (){
-
-
-        return simulationService.getAllSimulations();
-
-    }
-
-    @RequestMapping("/deleteSimulation/{id}")
-    public ArrayList<Simulation> deleteSimulationById (){
-
+    public Iterable<Simulation> getAllSimulations (){
 
         return simulationService.getAllSimulations();
 
     }
 
-    @RequestMapping("/deleteSimulation/{user}")
-    public ArrayList<Simulation> deleteSimulationByUser(){
+    @RequestMapping("/populate")
+    public String populateDB(){
 
+        simulationService.populate();
 
-        return simulationService.getAllSimulations();
-
+        return "ok";
     }
+
 
 
 

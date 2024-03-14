@@ -1,4 +1,5 @@
 package com.example.demo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.javafaker.Faker;
 
@@ -11,13 +12,18 @@ import java.util.UUID;
 @Service
 public class SimulationService {
 
-    static ArrayList<Simulation> simulations = new ArrayList<>();
+    //static ArrayList<Simulation> simulations = new ArrayList<>();
 
-    // we will fill the list simulations
-    // with fake objects simulation
-    // we need the faker dependency
-    // and then the loop will create and add one-by-one
-    static {
+    @Autowired
+    SimulationRepository simulationRepository;
+
+    public Iterable<Simulation> getAllSimulations (){
+
+        return  simulationRepository.findAll();
+    }
+
+
+    public void populate() {
 
         // locale in english
         Faker faker = new Faker(new Locale("en-GB"));
@@ -29,20 +35,13 @@ public class SimulationService {
         for (int i = 0; i <10 ; i++ ){
 
             uniqueID = UUID.randomUUID().toString();
-            simulations.add(
+            simulationRepository.save(
                     new Simulation ( uniqueID,
-                                     date.toString(),
-                                    faker.number().numberBetween(100, 1250),
+                            date.toString(),
+                            faker.number().numberBetween(100, 1250),
                             faker.artist().name() ));
+
+
         }
-
     }
-
-    // return simulations to controller
-    // get simulations form list static from class and return as signature
-    public ArrayList<Simulation> getAllSimulations (){
-        return simulations;
-    }
-
-
 }
