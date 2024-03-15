@@ -2,9 +2,7 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.javafaker.Faker;
-
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.UUID;
 
