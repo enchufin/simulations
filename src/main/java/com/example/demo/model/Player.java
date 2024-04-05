@@ -25,7 +25,7 @@ public class Player {
     private int age;
     private boolean active;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Simulation> simulations = new ArrayList<>();
 
     public void addSimulation(Simulation simulation) {
