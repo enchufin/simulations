@@ -15,7 +15,10 @@ public class Simulation {
     private String id;
     private String createdAt;
     private int timeElapsed;
-    private String player;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="PLAYER_FK")
+    private Player player;
 
 
 }

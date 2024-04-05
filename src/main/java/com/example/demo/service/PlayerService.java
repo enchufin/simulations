@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.model.Simulation;
 import com.example.demo.model.Player;
 import com.example.demo.repository.PlayerRepository;
+import com.example.demo.repository.SimulationRepository;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,8 @@ public class PlayerService {
 
     @Autowired
     PlayerRepository playerRepository;
-
     @Autowired
     SimulationService simulationService;
-
 
     public void populate() {
 
@@ -32,16 +31,20 @@ public class PlayerService {
         String uniqueID;
 
         for (int i = 0; i <10 ; i++ ){
-            simulations = simulationService.populate();
-            uniqueID = UUID.randomUUID().toString();
-            Player player =  new Player(   uniqueID,
-                    faker.artist().name(),
-                    faker.number().numberBetween(10, 100),
-                    true,
-                    simulations);
-            playerRepository.save(player
-                             );
 
+            uniqueID = UUID.randomUUID().toString();
+            Player player =  new Player();
+            player.setId(uniqueID);
+            player.setActive(true);
+            player.setPlayer( faker.artist().name());
+            player.setAge(faker.number().numberBetween(10, 100));
+
+            simulations = simulationService.createFakeSimulations();
+
+            for (int j = 0; j <10 ; j++ ) {
+                player.addSimulation(simulations.get(j));
+            }
+            playerRepository.save(player);
 
         }
     }

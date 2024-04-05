@@ -28,4 +28,9 @@ public class Player {
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Simulation> simulations = new ArrayList<>();
 
+    public void addSimulation(Simulation simulation) {
+        this.getSimulations().add(simulation);
+        //if (simulation.getId() != null) simulation.getId().getSimulations().remove(simulation);
+        simulation.setPlayer(this);
+    }
 }
