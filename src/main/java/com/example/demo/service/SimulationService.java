@@ -1,10 +1,11 @@
-package com.example.demo;
+package com.example.demo.service;
+import com.example.demo.model.Simulation;
+import com.example.demo.repository.SimulationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.javafaker.Faker;
-import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
+
+import java.util.*;
 
 
 @Service
@@ -15,17 +16,13 @@ public class SimulationService {
     @Autowired
     SimulationRepository simulationRepository;
 
-    public Iterable<Simulation> getAllSimulations (){
 
-        return  simulationRepository.findAll();
-    }
-
-
-    public void populate() {
+    public List<Simulation> populate() {
 
         // locale in english
         Faker faker = new Faker(new Locale("en-GB"));
         Date date = new Date();
+        List<Simulation> simulations = new ArrayList<>();
 
         // ref variable creation UUID
         String uniqueID;
@@ -33,13 +30,17 @@ public class SimulationService {
         for (int i = 0; i <10 ; i++ ){
 
             uniqueID = UUID.randomUUID().toString();
-            simulationRepository.save(
-                    new Simulation ( uniqueID,
-                            date.toString(),
-                            faker.number().numberBetween(100, 1250),
-                            faker.artist().name() ));
+            Simulation simulation = new Simulation( uniqueID,
+                    date.toString(),
+                    faker.number().numberBetween(100, 1250),
+                    faker.artist().name() );
+
+            simulationRepository.save(simulation);
+            simulations.add(simulation);
 
 
         }
+
+        return simulations;
     }
 }

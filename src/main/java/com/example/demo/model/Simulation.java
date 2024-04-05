@@ -1,7 +1,7 @@
-package com.example.demo;
+package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +15,7 @@ public class Simulation {
     private String id;
     private String createdAt;
     private int timeElapsed;
-    private String userName;
+    private String player;
+
+
 }
