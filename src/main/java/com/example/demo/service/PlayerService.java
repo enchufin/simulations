@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.model.Simulation;
 import com.example.demo.model.Player;
+import com.example.demo.model.Card;
 import com.example.demo.repository.PlayerRepository;
 import com.example.demo.repository.SimulationRepository;
+import com.example.demo.repository.CardRepository;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class PlayerService {
     PlayerRepository playerRepository;
     @Autowired
     SimulationService simulationService;
+    @Autowired
+    CardService cardService;
 
     public void populate() {
 
@@ -25,6 +29,7 @@ public class PlayerService {
         Faker faker = new Faker(new Locale("en-GB"));
 
         List<Simulation> simulations;
+        List<Card> cards;
         //Date date = new Date();
 
         // ref variable creation UUID
@@ -44,8 +49,14 @@ public class PlayerService {
             for (int j = 0; j <10 ; j++ ) {
                 player.addSimulation(simulations.get(j));
             }
-            playerRepository.save(player);
 
+            cards = cardService.createFakeCards();
+            for (int j = 0; j <10 ; j++ ) {
+                player.addCard(cards.get(j));
+
+            }
+            playerRepository.save(player);
         }
+
     }
 }

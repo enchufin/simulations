@@ -33,4 +33,11 @@ public class Player {
         //if (simulation.getId() != null) simulation.getId().getSimulations().remove(simulation);
         simulation.setPlayer(this);
     }
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Card> cards = new ArrayList<>();
+
+    public void addCard(Card card) {
+        this.getCards().add(card);
+        card.setPlayer(this);
+    }
 }
