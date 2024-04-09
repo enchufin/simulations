@@ -16,6 +16,7 @@ public class SimulationService {
     @Autowired
     SimulationRepository simulationRepository;
 
+
     public List<Simulation> createFakeSimulations() {
 
         // locale in english
@@ -40,7 +41,6 @@ public class SimulationService {
 
         return simulations;
     }
-
     public List<Simulation> populate() {
 
         List<Simulation> simulations = createFakeSimulations();
@@ -52,6 +52,4 @@ public class SimulationService {
 
         return simulations;
     }
-
-
 }
