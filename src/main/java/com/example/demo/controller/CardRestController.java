@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Card;
+import com.example.demo.model.Simulation;
 import com.example.demo.repository.CardRepository;
 import com.example.demo.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class CardRestController {
 
     //CRUD: read
     @RequestMapping("/cards")
-    public Iterable<Card> getAllCards (){
+    public Iterable<Card> getAllCards() {
 
         return cardRepository.findAll();
 
@@ -36,18 +37,18 @@ public class CardRestController {
         long countBefore = cardRepository.count();
         //System.out.println("simulationFound:" + simulationFound);
 
-        if (cardFound.isPresent()){
+        if (cardFound.isPresent()) {
             cardRepository.deleteById(id);
             long countAfter = cardRepository.count();
             String response = "card deleted: " + id + " count: " + countBefore + "/" + countAfter;
             return response;
-        } else return "id: " + id +  " not found " + " count: " + countBefore;
+        } else return "id: " + id + " not found " + " count: " + countBefore;
 
     }
 
     //CRUD: create
-    @PostMapping(path="create", consumes = "application/JSON")
-    public Card createCard(@RequestBody Card card){
+    @PostMapping(path = "create", consumes = "application/JSON")
+    public Card createCard(@RequestBody Card card) {
         //
         Card cardCreated = cardRepository.save(card);
         return cardCreated;
@@ -61,7 +62,10 @@ public class CardRestController {
 
         if (cardFound.isPresent()) {
             Card cardToUpdate = cardFound.get();
-           cardToUpdate.setExpDate(card.getMaxCredit());
+            //
+            if  (card.getExpDate() > 0) {
+                cardToUpdate.setExpDate(card.getExpDate());
+            }
 
             Card cardUpdated = cardRepository.save(cardToUpdate);
             return cardUpdated;
@@ -70,16 +74,16 @@ public class CardRestController {
 
     }
 
-    @RequestMapping("/populate")
-    public String populateDB(){
 
-        cardService.populate();
 
-        return "ok";
+
+        @RequestMapping("/populate")
+        public String populateDB () {
+
+            cardService.populate();
+
+            return "ok";
+        }
+
+
     }
-
-
-
-
-
-}
