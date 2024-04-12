@@ -44,11 +44,13 @@ public class Player {
     public void addCard(Card card) {
         this.getCards().add(card);
         card.setPlayer(this);
+    }
 
     public void addPayment(Payment payment) {
         this.getPayments().add(payment);
         //if (simulation.getId() != null) simulation.getId().getSimulations().remove(simulation);
         payment.setPlayer(this);
+    }
 
     public void addSubscription(Subscription subscription) {
         this.getSubscriptions().add(subscription);
