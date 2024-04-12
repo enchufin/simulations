@@ -7,8 +7,6 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +31,19 @@ public class Player {
   
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Payment> payments = new ArrayList<>();
+  
+     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Card> cards = new ArrayList<>();
 
     public void addSimulation(Simulation simulation) {
         this.getSimulations().add(simulation);
         //if (simulation.getId() != null) simulation.getId().getSimulations().remove(simulation);
         simulation.setPlayer(this);
     }
+
+    public void addCard(Card card) {
+        this.getCards().add(card);
+        card.setPlayer(this);
 
     public void addPayment(Payment payment) {
         this.getPayments().add(payment);

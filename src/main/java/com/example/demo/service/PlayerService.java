@@ -4,8 +4,10 @@ import com.example.demo.model.Payment;
 import com.example.demo.model.Simulation;
 import com.example.demo.model.Subscription;
 import com.example.demo.model.Player;
+import com.example.demo.model.Card;
 import com.example.demo.repository.PlayerRepository;
 import com.example.demo.repository.SimulationRepository;
+import com.example.demo.repository.CardRepository;
 import com.example.demo.repository.SubscriptionRepository;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,11 @@ public class PlayerService {
     @Autowired
     SimulationService simulationService;
     @Autowired
+    CardService cardService;
+    @Autowired
     PaymentService paymentService;
     @Autowired
     SubscriptionService subscriptionService;
-
 
     public void populate() {
 
@@ -32,6 +35,7 @@ public class PlayerService {
         Faker faker = new Faker(new Locale("en-GB"));
 
         List<Simulation> simulations;
+        List<Card> cards;
         List<Payment> payments;
         List<Subscription> subscriptions;
         //Date date = new Date();
@@ -55,7 +59,6 @@ public class PlayerService {
             for (int j = 0; j <10 ; j++ ) {
                 player.addSimulation(simulations.get(j));
                 player.addSubscription(subscriptions.get(j));
-
             }
 
             // add payments to EACH player
@@ -63,10 +66,17 @@ public class PlayerService {
             for (int j = 0; j <10 ; j++ ) {
                 player.addPayment(payments.get(j));
             }
+          
+            // add cards to EACH player
+            cards = cardService.createFakeCards();
+            for (int j = 0; j <10 ; j++ ) {
+                player.addCard(cards.get(j));
+            }
 
             // eventually we SAVE data (PLAYER + ...) to DB H2 by JPA
             playerRepository.save(player);
 
         }
+
     }
 }
