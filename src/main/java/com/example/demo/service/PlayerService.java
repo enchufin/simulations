@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Payment;
 import com.example.demo.model.Simulation;
 import com.example.demo.model.Subscription;
 import com.example.demo.model.Player;
@@ -15,13 +16,15 @@ import java.util.*;
 @Service
 public class PlayerService {
 
-
     @Autowired
     PlayerRepository playerRepository;
     @Autowired
     SimulationService simulationService;
     @Autowired
+    PaymentService paymentService;
+    @Autowired
     SubscriptionService subscriptionService;
+
 
     public void populate() {
 
@@ -29,9 +32,9 @@ public class PlayerService {
         Faker faker = new Faker(new Locale("en-GB"));
 
         List<Simulation> simulations;
-        //Date date = new Date();
-
+        List<Payment> payments;
         List<Subscription> subscriptions;
+        //Date date = new Date();
 
         // ref variable creation UUID
         String uniqueID;
@@ -47,12 +50,21 @@ public class PlayerService {
 
             subscriptions = subscriptionService.createFakeSubscriptions();
             simulations = simulationService.createFakeSimulations();
-
+          
+            // add simulations to EACH player
             for (int j = 0; j <10 ; j++ ) {
                 player.addSimulation(simulations.get(j));
                 player.addSubscription(subscriptions.get(j));
 
             }
+
+            // add payments to EACH player
+            payments = paymentService.createFakePayments();
+            for (int j = 0; j <10 ; j++ ) {
+                player.addPayment(payments.get(j));
+            }
+
+            // eventually we SAVE data (PLAYER + ...) to DB H2 by JPA
             playerRepository.save(player);
 
         }
