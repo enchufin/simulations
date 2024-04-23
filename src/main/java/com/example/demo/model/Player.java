@@ -28,18 +28,26 @@ public class Player {
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Subscription> subscriptions = new ArrayList<>();
-  
+
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Payment> payments = new ArrayList<>();
-  
+
      @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Card> cards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Social> socials = new ArrayList<>();
 
     public void addSimulation(Simulation simulation) {
         this.getSimulations().add(simulation);
         //if (simulation.getId() != null) simulation.getId().getSimulations().remove(simulation);
         simulation.setPlayer(this);
     }
+    public void addSocial(Social social) {
+        this.getSocials().add(social);
+        social.setPlayer(this);
+    }
+
 
     public void addCard(Card card) {
         this.getCards().add(card);
