@@ -23,8 +23,6 @@ public class PlayerService {
     @Autowired
     PlayerRepository playerRepository;
     @Autowired
-    SocialRepository socialRepository;
-    @Autowired
     SimulationService simulationService;
     @Autowired
     SocialService socialService;

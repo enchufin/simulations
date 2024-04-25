@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,11 +29,20 @@ public class Player {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Payment> payments = new ArrayList<>();
 
-     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<Social> socials = new ArrayList<>();
+
+    @OneToMany(targetEntity= Enrollment.class, mappedBy = "player", cascade = CascadeType.ALL,  fetch= FetchType.LAZY)
+    private List<Enrollment> enrollments = new ArrayList<>();
+
+    public void addEnrollment(Enrollment enrollment) {
+        this.getEnrollments().add(enrollment);
+        enrollment.setPlayer(this);
+    }
+
 
     public void addSimulation(Simulation simulation) {
         this.getSimulations().add(simulation);
