@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,13 @@ public class TrafficTrial {
 
     @OneToMany(targetEntity= Enrollment.class, mappedBy = "trafficTrial", cascade = CascadeType.ALL,  fetch= FetchType.LAZY)
     private List<Enrollment> enrollments = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "TRAFFIC_TRIAL_UNIVERSITY_FKS",
+            joinColumns = @JoinColumn(name = "TRAFFIC_TRIAL_FK"),
+            inverseJoinColumns = @JoinColumn(name = "UNIVERSITY_FK"))
+    private List<University> universities = new ArrayList<>();
 
     public void addEnrollment(Enrollment enrollment) {
         this.getEnrollments().add(enrollment);
