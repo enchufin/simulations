@@ -39,4 +39,9 @@ public class TrafficTrial {
         this.getEnrollments().add(enrollment);
         enrollment.setTrafficTrial(this);
     }
+
+    public void addUniversity(University university) {
+        this.getUniversities().add(university);
+
+    }
 }

@@ -43,7 +43,6 @@ public class Player {
         enrollment.setPlayer(this);
     }
 
-
     public void addSimulation(Simulation simulation) {
         this.getSimulations().add(simulation);
         //if (simulation.getId() != null) simulation.getId().getSimulations().remove(simulation);
@@ -53,7 +52,6 @@ public class Player {
         this.getSocials().add(social);
         social.setPlayer(this);
     }
-
 
     public void addCard(Card card) {
         this.getCards().add(card);
@@ -70,6 +68,5 @@ public class Player {
         this.getSubscriptions().add(subscription);
         //if (subscription.getId() != null) subscription.getId().getSubscriptions().remove(subscription);
         subscription.setPlayer(this);
-
     }
 }
