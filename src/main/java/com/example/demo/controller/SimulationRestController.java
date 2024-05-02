@@ -18,11 +18,6 @@ public class SimulationRestController {
     @Autowired
     SimulationRepository simulationRepository;
 
-    @RequestMapping("/hello")
-    public String HelloWorld (){
-        return "This is a sandbox for my first java class controller";
-    }
-
     //CRUD: read
     @RequestMapping("/simulations")
     public Iterable<Simulation> getAllSimulations (){
@@ -78,7 +73,7 @@ public class SimulationRestController {
     }
 
     @RequestMapping("/populate")
-    public String populateDB(){
+    public String populateSimulationDB(){
 
         simulationService.populate();
 
